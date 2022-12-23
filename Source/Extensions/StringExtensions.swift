@@ -17,7 +17,7 @@ extension String {
 
 private class FramesBundle {
     class var base: Foundation.Bundle {
-#if SWIFT_PACKAGE
+#if SWIFT_PACKAGE || COCOAPODS
         let baseBundle = Bundle.module
 #else
         let baseBundle = Foundation.Bundle(for: FramesBundle.self)
@@ -27,3 +27,13 @@ private class FramesBundle {
         return bundle
     }
 }
+
+#if COCOAPODS
+extension Bundle {
+    static let module = Bundle.main.path(forResource: "FramesAssets", ofType: "bundle").flatMap { Bundle(path: $0) } ??
+      Bundle(for: BundleToken.self).path(forResource: "FramesAssets", ofType: "bundle").flatMap(Bundle.init) ??
+      Bundle(for: BundleToken.self)
+}
+
+private final class BundleToken { }
+#endif
