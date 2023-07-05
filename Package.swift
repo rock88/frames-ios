@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.6
 import PackageDescription
 
 let package = Package(
@@ -16,22 +16,20 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            name: "PhoneNumberKit",
             url: "https://github.com/marmelroy/PhoneNumberKit.git",
-            from: "3.3.3"
-        ),
+            exact: "3.5.9"),
         .package(
-            name: "CheckoutEventLoggerKit",
             url: "https://github.com/checkout/checkout-event-logger-ios-framework.git",
-            from: "1.2.0"
+            from: "1.2.4"
         )
     ],
     targets: [
         .target(
             name: "Frames",
             dependencies: [
+                .product(name: "CheckoutEventLoggerKit",
+                         package: "checkout-event-logger-ios-framework"),
                 "PhoneNumberKit",
-                "CheckoutEventLoggerKit",
                 "Checkout"
             ],
             path: "Source",
@@ -43,7 +41,8 @@ let package = Package(
         .target(
             name: "Checkout",
             dependencies: [
-                "CheckoutEventLoggerKit",
+                .product(name: "CheckoutEventLoggerKit",
+                         package: "checkout-event-logger-ios-framework"),
             ],
             path: "Checkout/Checkout/Source"
         ),

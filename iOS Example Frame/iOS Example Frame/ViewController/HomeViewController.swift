@@ -70,6 +70,14 @@ class HomeViewController: UIViewController {
     navigationController?.pushViewController(viewController, animated: true)
   }
 
+    @IBAction private func showBorderTheme(_ sender: Any) {
+        customizeNavigationBarAppearance(backgroundColor: .white, foregroundColor: .black)
+        let viewController = Factory.getBordersPaymentViewController { [weak self] result in
+          self?.handleTokenResponse(with: result)
+        }
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
   @IBAction private func getApplePayData(_ sender: Any) {
     handleApplePayAction()
   }
@@ -137,6 +145,8 @@ class HomeViewController: UIViewController {
                 showAlert(with: "Error code: \(serverError.code)", title: "Server Error")
             case .couldNotBuildURLForRequest:
                 showAlert(with: "Error code: \(failure.code)", title: "Could Not Build URL")
+            case .missingAPIKey:
+                showAlert(with: "You need to make sure an API key is present", title: "Missing API Key")
             }
         case .success(let tokenDetails):
             showAlert(with: tokenDetails.token, title: "Success")

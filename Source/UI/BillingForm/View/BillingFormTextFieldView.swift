@@ -86,6 +86,7 @@ class BillingFormTextFieldView: UIView {
         self.type = type
         self.style = style
         textField.tag = tag
+        textField.accessibilityIdentifier = type.accessibilityIdentifier
         backgroundColor = style.backgroundColor
 
         mandatoryLabel.isHidden = style.isMandatory || style.title == nil
@@ -122,7 +123,7 @@ class BillingFormTextFieldView: UIView {
         style.textfield.borderStyle.normalColor
         textFieldContainerBorder.update(with: style.textfield.borderStyle)
         textFieldContainerBorder.updateBorderColor(to: borderColor)
-        textFieldContainer.backgroundColor = style.textfield.backgroundColor
+        textFieldContainerBorder.backgroundColor = style.textfield.backgroundColor
     }
 
     private func update(textField: BillingFormTextField?, style: CellTextFieldStyle, textFieldValue: String?, tag: Int) {

@@ -25,6 +25,13 @@ extension CAShapeLayer {
         self.path = path.cgPath
     }
 
+    func createBackground(with style: ElementBorderStyle) {
+        let path = UIBezierPath(roundedRect: frame,
+                                byRoundingCorners: style.corners ?? [],
+                                cornerRadii: CGSize(width: style.cornerRadius, height: style.cornerRadius))
+        self.path = path.cgPath
+    }
+
     /*
      (0,0)  c-----------c  (100,0)
             |           |
@@ -75,7 +82,7 @@ extension CAShapeLayer {
         if edges.contains(.top) {
             path.drawLine(startX: rect.maxX - topRightCornerRadius,
                           startY: rect.minY,
-                          endX: rect.minX + topLeftCornerRadius ,
+                          endX: rect.minX + topLeftCornerRadius,
                           endY: rect.minY)
         }
 
